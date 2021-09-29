@@ -1,4 +1,5 @@
 const express = require('express');
+
 const app = express();
 const morgan = require('morgan');
 
@@ -6,7 +7,9 @@ const plotRouter = require('./routes/plotRoutes');
 const userRouter = require('./routes/userRoutes');
 
 //middleware
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 app.use(express.json());
 

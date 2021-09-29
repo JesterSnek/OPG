@@ -1,5 +1,5 @@
 const express = require('express');
-const plotController = require('./../controllers/plotController');
+const plotController = require('../controllers/plotController');
 
 const router = express.Router();
 
