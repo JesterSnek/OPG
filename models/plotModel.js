@@ -11,6 +11,12 @@ const plotSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'Plot size is required.'],
   },
+  soilType: {
+    type: String,
+  },
+  trees: {
+    type: Number,
+  },
 });
 
 const Plot = mongoose.model('Plot', plotSchema);

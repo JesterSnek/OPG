@@ -12,6 +12,7 @@ router
 router
   .route('/:plotid')
   .get(plotController.getPlot)
-  .patch(plotController.updatePlot);
+  .patch(plotController.updatePlot)
+  .delete(plotController.deletePlot);
 
 module.exports = router;
