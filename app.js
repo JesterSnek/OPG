@@ -19,8 +19,8 @@ app.use((req, res, next) => {
 });
 
 //Routes
-app.use('/api/v1/:opgid/plots', (req, res, next) => {
-  req.opgid = req.params.opgid; //passing a parameter to a mounted route
+app.use('/api/v1/plots', (req, res, next) => {
+  //req.opgid = req.params.opgid; //passing a parameter to a mounted route
   plotRouter(req, res, next);
 });
 app.use('/api/v1/users', userRouter);

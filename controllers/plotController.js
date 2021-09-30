@@ -1,80 +1,79 @@
-const fs = require('fs');
-// eslint-disable-next-line no-unused-vars
-const { toUSVString } = require('util');
+const Plot = require('../models/plotModel');
 
-const dbData = JSON.parse(
-  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
-);
+exports.getAllFamilyPlots = async (req, res) => {
+  try {
+    const plots = await Plot.find();
 
-//Checks if the given family or plot ID exists
-exports.checkID = (req, res, next, val) => {
-  const opgid = req.opgid * 1;
-
-  if (opgid > dbData.length - 1 || val * 1 > dbData[opgid].plots.length - 1) {
-    return res.status(404).json({
+    res.status(200).json({
+      status: 'success',
+      results: plots.length,
+      data: {
+        plots,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
       status: 'fail',
-      message: 'Invalid ID',
+      message: err,
     });
   }
-  next();
 };
 
-exports.checkBody = (req, res, next) => {
-  if (!req.body.name || !req.body.description) {
-    return res.status(400).json({
+exports.getPlot = async (req, res) => {
+  try {
+    const plot = await Plot.findById(req.params.plotid);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        plot,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
       status: 'fail',
-      message: 'Missing name and/or description.',
+      message: err,
     });
   }
-  next();
 };
 
-exports.getAllFamilyPlots = (req, res) => {
-  const opgid = req.opgid * 1; // ID of the family, NOT req.params.opgid because its handled before the router is called
-  const opg = dbData.find((el) => el.opgid === opgid); //contains all the plots of the family with the given ID
+exports.uploadPlot = async (req, res) => {
+  try {
+    // const newPlot = new Plot({})
+    // newPlot.save()
 
-  res.status(200).json({
-    status: 'success',
-    requestedAt: req.requestTime,
-    results: opg.length,
-    data: {
-      opg,
-    },
-  });
-};
+    const newPlot = await Plot.create(req.body);
 
-exports.getPlot = (req, res) => {
-  const opgid = req.opgid * 1; // ID of the family, NOT req.params.opgid because its handled before the router is called
-  const plotid = req.params.plotid * 1; // ID of the plot
-
-  const opg = dbData.find((el) => el.opgid === opgid); //contains all the plots of the family with the given ID
-
-  const plot = opg.plots.find((el) => el.plotid === plotid); //contains the specific plot from the given plot ID
-  res.status(200).json({
-    status: 'success',
-    data: {
-      plot,
-    },
-  });
-};
-
-exports.uploadPlot = (req, res) => {
-  const opgid = req.opgid * 1; // ID of the family
-  const opg = dbData.find((el) => el.opgid === opgid); //contains all the plots of the family with the given ID
-
-  const newId = opg.plots[opg.plots.length - 1].plotid + 1;
-  const newPlot = Object.assign({ plotid: newId }, req.body); //object.assign combines 2 objects
-
-  dbData[opgid].plots.push(newPlot);
-
-  fs.writeFile(
-    `${__dirname}/../dev-data/data/tours-simple.json`,
-    JSON.stringify(dbData),
-    (err) => {
-      res.status(201).json({
-        status: 'success',
+    res.status(201).json({
+      status: 'success',
+      data: {
         plot: newPlot,
-      });
-    }
-  );
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+
+exports.updatePlot = async (req, res) => {
+  try {
+    const plot = await Plot.findByIdAndUpdate(req.params.plotid, req.body, {
+      new: true, // returns the modified document and not the original
+    });
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        plot,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
 };
