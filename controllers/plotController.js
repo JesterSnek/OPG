@@ -1,18 +1,15 @@
 const Plot = require('../models/plotModel');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.getAllFamilyPlots = async (req, res) => {
   try {
-    //BUILD QUERY
-    const queryObj = { ...req.query };
-    const excludedFields = ['page', 'sort', 'limit', 'fields'];
-    excludedFields.forEach((el) => delete queryObj[el]);
-
-    let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-
-    const query = await Plot.find(JSON.parse(queryStr));
     //EXECUTE QUERY
-    const plots = await query;
+    const features = new APIFeatures(Plot.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const plots = await features.query;
 
     res.status(200).json({
       status: 'success',
