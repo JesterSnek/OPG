@@ -5,6 +5,8 @@ const router = express.Router();
 
 //router.param('plotid', plotController.checkID);
 
+router.route('/plot-stats').get(plotController.getPlotStats);
+
 router
   .route('/')
   .get(plotController.getAllFamilyPlots)

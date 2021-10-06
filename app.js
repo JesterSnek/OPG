@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/errorController');
 const plotRouter = require('./routes/plotRoutes');
 const userRouter = require('./routes/userRoutes');
 
@@ -24,5 +26,11 @@ app.use('/api/v1/plots', (req, res, next) => {
   plotRouter(req, res, next);
 });
 app.use('/api/v1/users', userRouter);
+
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl}`, 404));
+});
+
+app.use(globalErrorHandler);
 
 module.exports = app;
