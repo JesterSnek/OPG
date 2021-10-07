@@ -9,11 +9,13 @@
   "scripts": {
     "start": "nodemon server.js",
     "start:prod": "SET NODE_ENV=production & nodemon server.js",
-    "debug": "ndb server.js"
+    "debug": "ndb server.js",
+    "debug:prod": "SET NODE_ENV=production & ndb server.js"
   },
   "author": "Josip Vištica",
   "license": "ISC",
   "dependencies": {
+    "clone": "^2.1.2",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^5.13.9",

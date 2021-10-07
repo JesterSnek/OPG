@@ -1,6 +1,7 @@
 const Plot = require('../models/plotModel');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.getAllFamilyPlots = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(Plot.find(), req.query)
@@ -22,6 +23,10 @@ exports.getAllFamilyPlots = catchAsync(async (req, res, next) => {
 
 exports.getPlot = catchAsync(async (req, res, next) => {
   const plot = await Plot.findById(req.params.plotid);
+
+  if (!plot) {
+    return next(new AppError('No plot found with that ID', 404));
+  }
 
   res.status(200).json({
     status: 'success',
@@ -48,6 +53,10 @@ exports.updatePlot = catchAsync(async (req, res, next) => {
     runValidators: true,
   });
 
+  if (!plot) {
+    return next(new AppError('No plot found with that ID', 404));
+  }
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -57,10 +66,15 @@ exports.updatePlot = catchAsync(async (req, res, next) => {
 });
 
 exports.deletePlot = catchAsync(async (req, res, next) => {
-  await Plot.findByIdAndDelete(req.params.plotid);
+  const plot = await Plot.findByIdAndDelete(req.params.plotid);
+
+  if (!plot) {
+    return next(new AppError('No plot found with that ID', 404));
+  }
 
   res.status(204).json({
     status: 'success',
+    data: null,
   });
 });
 
