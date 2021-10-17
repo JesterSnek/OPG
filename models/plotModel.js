@@ -41,6 +41,7 @@ const plotSchema = new mongoose.Schema(
     secretPlot: {
       type: Boolean,
       default: false,
+      select: false,
     },
   },
   {

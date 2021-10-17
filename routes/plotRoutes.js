@@ -16,6 +16,10 @@ router
   .route('/:plotid')
   .get(plotController.getPlot)
   .patch(plotController.updatePlot)
-  .delete(plotController.deletePlot);
+  .delete(
+    authController.protect,
+    authController.restrictTo('admin', 'lead-mod'),
+    plotController.deletePlot
+  );
 
 module.exports = router;
