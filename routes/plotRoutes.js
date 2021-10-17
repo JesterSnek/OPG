@@ -1,5 +1,6 @@
 const express = require('express');
 const plotController = require('../controllers/plotController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ router.route('/plot-stats').get(plotController.getPlotStats);
 
 router
   .route('/')
-  .get(plotController.getAllFamilyPlots)
+  .get(authController.protect, plotController.getAllFamilyPlots)
   .post(plotController.uploadPlot);
 router
   .route('/:plotid')
