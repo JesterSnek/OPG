@@ -11,6 +11,18 @@ const signToken = (id) =>
     expiresIn: process.env.JWT_EXPIRE,
   });
 
+const createSendToken = (user, statusCode, res) => {
+  const token = signToken(user._id);
+
+  res.status(statusCode).json({
+    status: 'success',
+    token,
+    data: {
+      user,
+    },
+  });
+};
+
 exports.signup = catchAsync(async (req, res, next) => {
   //user.create(req.body) would be a huge security breach
   const newUser = await User.create({
@@ -21,16 +33,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordChangedAt: req.body.passwordChangedAt,
     role: req.body.role,
   });
-
-  const token = signToken(newUser._id);
-
-  res.status(201).json({
-    status: 'success',
-    token,
-    data: {
-      user: newUser,
-    },
-  });
+  createSendToken(newUser, 201, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -47,12 +50,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect login data.', 401));
   }
   // if all is ok, send token to client
-  const token = signToken(user._id);
-
-  res.status(200).json({
-    status: 'success',
-    token,
-  });
+  createSendToken(user, 200, res);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -173,10 +171,21 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // update the changedPasswordAt property for current user // Done in middleware
 
   // log user in, send JWT
-  const token = signToken(user._id);
+  createSendToken(user, 200, res);
+});
 
-  res.status(200).json({
-    status: 'success',
-    token,
-  });
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  // Get user from collection
+  const user = await User.findById(req.user.id).select('+password');
+  // Check if POSTed password is correct
+  if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+    return next(new AppError('Wrong password.', 401));
+  }
+  // Update password
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  console.log(req.body.passwordConfirm);
+  await user.save();
+  // Log user in, send JWT
+  createSendToken(user, 200, res);
 });
