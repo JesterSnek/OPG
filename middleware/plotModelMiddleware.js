@@ -1,6 +1,6 @@
 const slugify = require('slugify');
 const mongoose = require('mongoose');
-const plotSchema = require('../../models/plotModel');
+const plotSchema = require('../models/plotModel');
 
 //not getting saved to DB, cant be accessed by queries
 plotSchema.virtual('sizeAcres').get(function () {
