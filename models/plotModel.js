@@ -21,7 +21,7 @@ const plotSchema = new mongoose.Schema(
     soilType: {
       type: String,
       enum: {
-        values: ['clay', 'peat', 'sandy', 'silt', 'chalky', 'loamy'],
+        values: ['Clay', 'Peat', 'Sandy', 'Silt', 'Chalky', 'Loamy'],
         message: 'Soil types can be clay, peat, silt, sandy, chalky or loamy.',
       },
     },
@@ -42,6 +42,17 @@ const plotSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
       select: false,
+    },
+    location: {
+      //GeoJSON
+      type: {
+        type: String,
+        default: 'Point',
+        enum: ['Point'],
+      },
+      coordinates: [Number],
+      address: String,
+      description: String,
     },
   },
   {

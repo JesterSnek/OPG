@@ -55,6 +55,20 @@ const sendErrorProd = (err, res) => {
   }
 };
 
+process.on('uncaughtException', (err) => {
+  console.log('uncaught exception! shutting down.');
+  console.log(err.name, err.message);
+
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.log('unhandled rejection! shutting down.');
+  console.log(err.name, err.message);
+
+  process.exit(1);
+});
+
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';

@@ -2,30 +2,25 @@ const express = require('express');
 
 const app = express();
 const morgan = require('morgan');
-const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 
 const AppError = require('./utils/appError');
+const rateLimit = require('./utils/rateLimit');
 const globalErrorHandler = require('./controllers/errorController');
 const plotRouter = require('./routes/plotRoutes');
 const userRouter = require('./routes/userRoutes');
 
-//GLOBAL MIDDLEWARE
+//Data Sanitization
 app.use(helmet()); // Set Security HTTP headers
 //Development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 // Limit request from same IP
-const limiter = rateLimit({
-  max: 50,
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  message: 'Too many requests from this IP, please try again in 15 minutes.',
-});
-app.use('/api', limiter);
+app.use('/api', rateLimit);
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
 // Data sanitization against NoSQL query injection
