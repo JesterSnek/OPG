@@ -12,6 +12,7 @@ const rateLimit = require('./utils/rateLimit');
 const globalErrorHandler = require('./controllers/errorController');
 const plotRouter = require('./routes/plotRoutes');
 const userRouter = require('./routes/userRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
 
 //Data Sanitization
 app.use(helmet()); // Set Security HTTP headers
@@ -48,6 +49,7 @@ app.use('/api/v1/plots', (req, res, next) => {
   plotRouter(req, res, next);
 });
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/reviews', reviewRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl}`, 404));
