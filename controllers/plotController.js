@@ -1,8 +1,8 @@
 const Plot = require('../middleware/plotModelMiddleware');
-const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+const factory = require('./handlerFactory');
 
+<<<<<<< Updated upstream
 exports.getAllFamilyPlots = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(Plot.find(), req.query)
     .filter()
@@ -77,6 +77,13 @@ exports.deletePlot = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+=======
+exports.getAllFamilyPlots = factory.getAll(Plot);
+exports.getPlot = factory.getOne(Plot, { path: 'reviews' });
+exports.createPlot = factory.createOne(Plot);
+exports.updatePlot = factory.updateOne(Plot);
+exports.deletePlot = factory.deleteOne(Plot);
+>>>>>>> Stashed changes
 
 exports.getPlotStats = catchAsync(async (req, res, next) => {
   const stats = await Plot.aggregate([
