@@ -1,5 +1,5 @@
 const rateLimit = require('express-rate-limit');
-const constants = require('./constants');
+const constants = require('../../constants/constantsCommon');
 
 const limiter = rateLimit({
   max: 50,

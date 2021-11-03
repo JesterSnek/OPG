@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const userSchema = require('../models/userModel');
-const constants = require('../utils/constants');
+const constants = require('../../constants/constantsCommon');
 
 userSchema.pre('save', async function (next) {
   //only runs if the password was modified

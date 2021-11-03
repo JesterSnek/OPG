@@ -1,6 +1,6 @@
 const express = require('express');
-const plotController = require('../controllers/plotController');
-const authController = require('../controllers/authController');
+const plotController = require('../../controllers/plotController');
+const authController = require('../../controllers/authController');
 const reviewRouter = require('./reviewRoutes');
 
 const router = express.Router();
