@@ -1,12 +1,17 @@
 const express = require('express');
 const reviewController = require('../controllers/reviewController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
 router
   .route('/')
   .get(reviewController.getAllReviews)
-  .post(reviewController.uploadReview);
+  .post(
+    authController.protect,
+    authController.restrictTo('user'),
+    reviewController.uploadReview
+  );
 
 router.route('/:reviewid').get(reviewController.getReview);
 
