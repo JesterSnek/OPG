@@ -7,12 +7,12 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 
-const AppError = require('./utils/appError');
-const rateLimit = require('./utils/rateLimit');
-const globalErrorHandler = require('./controllers/errorController');
-const plotRouter = require('./routes/plotRoutes');
-const userRouter = require('./routes/userRoutes');
-const reviewRouter = require('./routes/reviewRoutes');
+const AppError = require('./api/utils/appError');
+const rateLimit = require('./api/utils/rateLimit');
+const globalErrorHandler = require('./api/controllers/errorController');
+const plotRouter = require('./api/routes/v1/plotRoutes');
+const userRouter = require('./api/routes/v1/userRoutes');
+const reviewRouter = require('./api/routes/v1/reviewRoutes');
 
 //Data Sanitization
 app.use(helmet()); // Set Security HTTP headers

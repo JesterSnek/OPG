@@ -5,7 +5,7 @@ const User = require('../middleware/userModelMiddleware');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const sendEmail = require('../utils/email');
-const constants = require('../utils/constants');
+const constants = require('../../constants/constantsCommon');
 
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -107,7 +107,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 exports.restrictTo =
   (...roles) =>
   (req, res, next) => {
-    //roles ["admin", "lead-guide"]. role="user"
+    //roles ["admin", "lead-mod"]. role="user"
     if (!roles.includes(req.user.role)) {
       return next(
         new AppError('you do not have permission to perform this action.', 403)
