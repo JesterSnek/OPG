@@ -7,6 +7,13 @@ plotSchema.virtual('sizeAcres').get(function () {
   return this.size / 4047; // approx conversion from km squared to acres
 });
 
+// Virtual populate // Doesn't persist to the DB incase theres thousands of reviews in the future
+plotSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'plot',
+  localField: '_id',
+});
+
 //Document middleware, runs before .save() and .create()
 plotSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });

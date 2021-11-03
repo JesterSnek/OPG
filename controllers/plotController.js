@@ -22,7 +22,7 @@ exports.getAllFamilyPlots = catchAsync(async (req, res, next) => {
 });
 
 exports.getPlot = catchAsync(async (req, res, next) => {
-  const plot = await Plot.findById(req.params.plotid);
+  const plot = await Plot.findById(req.params.plotid).populate('reviews');
 
   if (!plot) {
     return next(new AppError('No plot found with that ID', 404));

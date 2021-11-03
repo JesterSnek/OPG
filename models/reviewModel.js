@@ -10,6 +10,7 @@ const reviewSchema = new mongoose.Schema(
       type: Number,
       min: 1,
       max: 5,
+      required: [true, 'You need to give a rating to submit a review!'],
     },
     createdAt: {
       type: Date,
@@ -32,6 +33,4 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-const Review = mongoose.model('Review', reviewSchema);
-
-module.exports = Review;
+module.exports = reviewSchema;

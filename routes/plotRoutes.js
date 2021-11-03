@@ -1,10 +1,11 @@
 const express = require('express');
 const plotController = require('../controllers/plotController');
 const authController = require('../controllers/authController');
+const reviewRouter = require('./reviewRoutes');
 
 const router = express.Router();
 
-//router.param('plotid', plotController.checkID);
+router.use('/:plotId/reviews', reviewRouter);
 
 router.route('/plot-stats').get(plotController.getPlotStats);
 
