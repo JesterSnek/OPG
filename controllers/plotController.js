@@ -1,94 +1,12 @@
-<<<<<<< Updated upstream
-const Plot = require('../models/plotModel');
-const APIFeatures = require('../utils/apiFeatures');
-=======
 const Plot = require('../middleware/plotModelMiddleware');
->>>>>>> Stashed changes
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
-<<<<<<< Updated upstream
-exports.getAllFamilyPlots = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(Plot.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
-  //EXECUTE QUERY
-  const plots = await features.query;
-
-  res.status(200).json({
-    status: 'success',
-    results: plots.length,
-    data: {
-      plots,
-    },
-  });
-});
-
-exports.getPlot = catchAsync(async (req, res, next) => {
-  const plot = await Plot.findById(req.params.plotid);
-
-  if (!plot) {
-    return next(new AppError('No plot found with that ID', 404));
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      plot,
-    },
-  });
-});
-
-exports.uploadPlot = catchAsync(async (req, res, next) => {
-  const newPlot = await Plot.create(req.body);
-
-  res.status(201).json({
-    status: 'success',
-    data: {
-      plot: newPlot,
-    },
-  });
-});
-
-exports.updatePlot = catchAsync(async (req, res, next) => {
-  const plot = await Plot.findByIdAndUpdate(req.params.plotid, req.body, {
-    new: true, // returns the modified document and not the original
-    runValidators: true,
-  });
-
-  if (!plot) {
-    return next(new AppError('No plot found with that ID', 404));
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      plot,
-    },
-  });
-});
-
-exports.deletePlot = catchAsync(async (req, res, next) => {
-  const plot = await Plot.findByIdAndDelete(req.params.plotid);
-
-  if (!plot) {
-    return next(new AppError('No plot found with that ID', 404));
-  }
-
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
-});
-=======
 exports.getAllFamilyPlots = factory.getAll(Plot);
 exports.getPlot = factory.getOne(Plot, { path: 'reviews' });
 exports.createPlot = factory.createOne(Plot);
 exports.updatePlot = factory.updateOne(Plot);
 exports.deletePlot = factory.deleteOne(Plot);
->>>>>>> Stashed changes
 
 exports.getPlotStats = catchAsync(async (req, res, next) => {
   const stats = await Plot.aggregate([

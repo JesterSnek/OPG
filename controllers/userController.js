@@ -1,19 +1,9 @@
-const User = require('../models/userModel');
+const User = require('../middleware/userModelMiddleware');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-<<<<<<< Updated upstream
 
-const filterObj = (obj, ...allowedFields) => {
-  const newObj = {};
-  Object.keys(obj).forEach((el) => {
-    if (allowedFields.includes(el)) newObj[el] = obj[el];
-  });
-  return newObj;
-};
-=======
 const filterFieldNames = require('../utils/filterFieldNames');
 const factory = require('./handlerFactory');
->>>>>>> Stashed changes
 
 exports.getUser = factory.getOne(User);
 exports.updateUser = factory.updateOne(User);
@@ -31,7 +21,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
   }
   // filter out unwanted field names out of req.body that are not allowed to be updated by the user
-  const filteredBody = filterObj(req.body, 'name', 'email');
+  const filteredBody = filterFieldNames(req.body, 'name', 'email');
   // update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
