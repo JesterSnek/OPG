@@ -1,4 +1,4 @@
-const Plot = require('../models/plotModel');
+const Plot = require('../middleware/plotModelMiddleware');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
