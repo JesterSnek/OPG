@@ -59,4 +59,8 @@ const plotSchema = new mongoose.Schema(
   }
 );
 
+// Indexing fields that are likely to be queried for often - Greatly increases efficiency
+plotSchema.index({ size: -1, ratingsAverage: -1 }); // Compound index
+plotSchema.index({ slug: 1 });
+
 module.exports = plotSchema;

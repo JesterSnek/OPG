@@ -11,14 +11,19 @@ router.route('/plot-stats').get(plotController.getPlotStats);
 
 router
   .route('/')
-  .get(authController.protect, plotController.getAllFamilyPlots)
-  .post(plotController.createPlot);
+  .get(plotController.getAllFamilyPlots)
+  .post(
+    authController.protect,
+    authController.restrictTo('admin', 'lead-mod'),
+    plotController.createPlot
+  );
+
 router
   .route('/:id')
   .get(plotController.getPlot)
   .patch(
     authController.protect,
-    authController.restrictTo('admin', 'lead-mod'),
+    authController.restrictTo('admin', 'lead-mod', 'mod'),
     plotController.updatePlot
   )
   .delete(
