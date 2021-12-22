@@ -26,6 +26,9 @@ const plotSchema = new mongoose.Schema(
     trees: {
       type: Number,
     },
+    imageCover: {
+      type: String,
+    },
     ratingsAverage: {
       type: Number,
       default: 4.5,

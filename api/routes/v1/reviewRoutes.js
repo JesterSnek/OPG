@@ -11,7 +11,7 @@ router
   .route('/')
   .get(reviewController.getAllReviews)
   .post(
-    authController.restrictTo('user'),
+    authController.restrictTo('user', 'mod'),
     reviewController.setUserTourIds,
     reviewController.createReview
   );
