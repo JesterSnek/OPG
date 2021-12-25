@@ -45,12 +45,13 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {
     return next(new AppError('You are not logged in!', 401));
   }
-
   // Validate token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
@@ -74,6 +75,33 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   //Grant Access
   req.user = currentUser;
+  next();
+});
+
+// Only for rendered pages, no errors!
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    // VERIFY TOKEN
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET
+    );
+
+    // Check if user still exists
+    const currentUser = await User.findById(decoded.id);
+    if (!currentUser) {
+      return next();
+    }
+
+    // Check if user changed pass after token was issued
+    if (currentUser.changedPasswordAfter(decoded.iat)) {
+      return next();
+    }
+
+    // A logged in user exists // Each PUG template will have access to res.locals
+    res.locals.user = currentUser;
+    return next();
+  }
   next();
 });
 
