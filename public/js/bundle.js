@@ -463,10 +463,14 @@ function hmrAcceptRun(bundle, id) {
 var _polyfill = require("@babel/polyfill");
 var _mapbox = require("./mapbox");
 var _login = require("./login");
+var _signup = require("./signup");
+var _logout = require("./logout");
 // DOM ELEMENTS
 //const plotName = JSON.parse(document.getElementById('name').dataset.name);
 var mapBox = document.getElementById('map');
-var loginForm = document.querySelector('.form');
+var loginForm = document.querySelector('.login-form');
+var signupForm = document.querySelector('.signup-form');
+var logOutBtn = document.querySelector('.nav__el--logout');
 // DELEGATIONS
 if (mapBox) {
     var locations = JSON.parse(mapBox.dataset.locations);
@@ -478,8 +482,18 @@ if (loginForm) loginForm.addEventListener('submit', function(e) {
     var password = document.getElementById('password').value;
     _login.login(email, password);
 });
+if (logOutBtn) logOutBtn.addEventListener('click', _logout.logout);
+if (signupForm) signupForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    var passwordConfirm = document.getElementById('passwordConfirm').value;
+    console.log(name, email, password, passwordConfirm);
+    _signup.signup(name, email, password, passwordConfirm);
+});
 
-},{"regenerator-runtime/runtime":"12Ae8","@babel/polyfill":"24gzU","./mapbox":"e59dZ","./login":"1AM71"}],"12Ae8":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"12Ae8","@babel/polyfill":"24gzU","./mapbox":"e59dZ","./login":"1AM71","./logout":"j4IOD","./signup":"5XINF"}],"12Ae8":[function(require,module,exports) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -10857,6 +10871,106 @@ var showAlert = function(type, message) {
     window.setTimeout(hideAlert, 5000);
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"5oERU"}]},["8JqYN","lT62u"], "lT62u", "parcelRequirec677")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"5oERU"}],"j4IOD":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "logout", function() {
+    return logout;
+});
+var _helpers = require("@swc/helpers");
+var _regeneratorRuntime = require("regenerator-runtime");
+var _regeneratorRuntimeDefault = parcelHelpers.interopDefault(_regeneratorRuntime);
+/* eslint-disable */ var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var logout = _helpers.asyncToGenerator(_regeneratorRuntimeDefault.default.mark(function _callee() {
+    var res;
+    return _regeneratorRuntimeDefault.default.wrap(function _callee$(_ctx) {
+        while(1)switch(_ctx.prev = _ctx.next){
+            case 0:
+                _ctx.prev = 0;
+                _ctx.next = 3;
+                return _axiosDefault.default({
+                    method: 'GET',
+                    url: 'http://127.0.0.1:8000/api/v1/users/logout'
+                });
+            case 3:
+                res = _ctx.sent;
+                res.data.status = 'success';
+                location.reload(true);
+                _ctx.next = 11;
+                break;
+            case 8:
+                _ctx.prev = 8;
+                _ctx.t0 = _ctx["catch"](0);
+                showAlert('error', 'Error logging out! Try again.');
+            case 11:
+            case "end":
+                return _ctx.stop();
+        }
+    }, _callee, null, [
+        [
+            0,
+            8
+        ]
+    ]);
+}));
+
+},{"@swc/helpers":"lQgvW","regenerator-runtime":"12Ae8","axios":"9qbW2","@parcel/transformer-js/src/esmodule-helpers.js":"5oERU"}],"5XINF":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "signup", function() {
+    return signup;
+});
+var _helpers = require("@swc/helpers");
+var _regeneratorRuntime = require("regenerator-runtime");
+var _regeneratorRuntimeDefault = parcelHelpers.interopDefault(_regeneratorRuntime);
+/* eslint-disable */ var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _alerts = require("./alerts");
+var signup = _helpers.asyncToGenerator(_regeneratorRuntimeDefault.default.mark(function _callee(name, email, password, passwordConfirm) {
+    var res;
+    return _regeneratorRuntimeDefault.default.wrap(function _callee$(_ctx) {
+        while(1)switch(_ctx.prev = _ctx.next){
+            case 0:
+                _ctx.prev = 0;
+                _ctx.next = 3;
+                return _axiosDefault.default({
+                    method: 'POST',
+                    url: 'http://127.0.0.1:8000/api/v1/users/signup',
+                    data: {
+                        name: name,
+                        email: email,
+                        password: password,
+                        passwordConfirm: passwordConfirm
+                    }
+                });
+            case 3:
+                res = _ctx.sent;
+                console.log('Testis');
+                if (res.data.status === 'success') {
+                    _alerts.showAlert('success', 'Signed up successfully! Redirecting you to the homepage in 5 seconds.');
+                    window.setTimeout(function() {
+                        location.assign('/');
+                    }, 5000);
+                }
+                _ctx.next = 11;
+                break;
+            case 8:
+                _ctx.prev = 8;
+                _ctx.t0 = _ctx["catch"](0);
+                _alerts.showAlert('error', _ctx.t0.response.data.message);
+            case 11:
+            case "end":
+                return _ctx.stop();
+        }
+    }, _callee, null, [
+        [
+            0,
+            8
+        ]
+    ]);
+}));
+
+},{"@swc/helpers":"lQgvW","regenerator-runtime":"12Ae8","axios":"9qbW2","./alerts":"jIq27","@parcel/transformer-js/src/esmodule-helpers.js":"5oERU"}]},["8JqYN","lT62u"], "lT62u", "parcelRequirec677")
 
 //# sourceMappingURL=bundle.js.map

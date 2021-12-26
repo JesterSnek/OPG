@@ -1,5 +1,6 @@
 const Plot = require('../middleware/plotModelMiddleware');
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.getOverview = catchAsync(async (req, res, next) => {
   // 1) Get tour data from collection
@@ -19,6 +20,8 @@ exports.getPlot = catchAsync(async (req, res, next) => {
     path: 'reviews',
     fields: 'review rating user',
   });
+
+  if (!plot) return next(new AppError('There is no plot with that name.', 404));
 
   res.status(200).render('plot', {
     title: `${plot.name} plot`,
