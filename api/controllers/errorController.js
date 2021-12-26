@@ -1,5 +1,4 @@
 const clone = require('clone');
-
 const AppError = require('../utils/appError');
 
 const handleCastErrorDB = (err) => {
@@ -27,32 +26,58 @@ const handleJWTError = () =>
 const handleJWTExpiredError = () =>
   new AppError('Your token has expired. Please login again!', 401);
 
-const sendErrorDev = (err, res) => {
-  res.status(err.statusCode).json({
-    status: err.status,
-    error: err,
-    message: err.message,
-    stack: err.stack,
+const sendErrorDev = (err, req, res) => {
+  // A) API
+  if (req.originalUrl.startsWith('/api')) {
+    return res.status(err.statusCode).json({
+      status: err.status,
+      error: err,
+      message: err.message,
+      stack: err.stack,
+    });
+  }
+  // B) RENDERED WEBSITE
+  // Log error
+  console.error('ERROR', err);
+  return res.status(err.statusCode).render('error', {
+    title: 'Something went wrong!',
+    msg: err.message,
   });
 };
 
-const sendErrorProd = (err, res) => {
-  //Operational, trusted error
-  if (err.isOperational) {
-    res.status(err.statusCode).json({
-      status: err.status,
-      message: err.message,
-    });
-    //Unknown error
-  } else {
-    //Log error
+const sendErrorProd = (err, req, res) => {
+  //A) API
+  if (req.originalUrl.startsWith('/api')) {
+    // Operational/Trusted error, send message to client
+    if (err.isOperational) {
+      return res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message,
+      });
+    }
+    // Log error
     console.error('ERROR', err);
-    //Send generic msg
-    res.status(500).json({
-      status: 'error',
-      message: 'Something went very wrong!',
+    // Return generic message - Error is not operational
+    return res.status(err.statusCode).json({
+      status: 500,
+      message: 'SOMETHING WENT VERY WRONG!',
     });
   }
+  //B) RENDERED WEBSITE
+  // Operational/Trusted error, send message to client
+  if (err.isOperational) {
+    return res.status(err.statusCode).render('error', {
+      title: 'Something went wrong!',
+      msg: err.message,
+    });
+  }
+  // Log error
+  console.error('ERROR', err);
+  // Return generic message - Error is not operational
+  return res.status(err.statusCode).render('error', {
+    title: 'Something went wrong!',
+    msg: 'Try again later.',
+  });
 };
 
 process.on('uncaughtException', (err) => {
@@ -74,7 +99,7 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
-    sendErrorDev(err, res);
+    sendErrorDev(err, req, res);
   } else if (process.env.NODE_ENV === 'production ') {
     //let error = { ...err };
     let error = clone(err);
@@ -86,6 +111,6 @@ module.exports = (err, req, res, next) => {
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
 
-    sendErrorProd(error, res);
+    sendErrorProd(error, req, res);
   }
 };

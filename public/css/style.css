@@ -41,6 +41,7 @@ body {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
+  margin: 0;
 }
 
 .main {
@@ -313,6 +314,9 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
 }
 @media only screen and (max-width: 62.5em) {
   .header {
@@ -323,7 +327,9 @@ body {
   }
 }
 .header__logo img {
-  height: 3.5rem;
+  width: 6vw;
+  height: auto;
+  margin-left: 33vw;
 }
 @media only screen and (max-width: 62.5em) {
   .header__logo {
@@ -823,7 +829,8 @@ body {
   }
 }
 .footer__logo img {
-  height: 3rem;
+  height: auto;
+  width: 6vw;
 }
 .footer__nav {
   list-style: none;
@@ -1222,6 +1229,16 @@ body {
 }
 
 .login-form {
+  margin: 0 auto;
+  max-width: 55rem;
+  background-color: #fff;
+  -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
+  padding: 5rem 7rem;
+  border-radius: 5px;
+}
+
+.signup-form {
   margin: 0 auto;
   max-width: 55rem;
   background-color: #fff;

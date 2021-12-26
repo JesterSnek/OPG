@@ -32,5 +32,7 @@ const reviewSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+// A user can only write one review per plot
+reviewSchema.index({ plot: 1, user: 1 }, { unique: true });
 
 module.exports = reviewSchema;

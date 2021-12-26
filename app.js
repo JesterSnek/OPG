@@ -1,11 +1,11 @@
 const express = require('express');
 
-const app = express();
 const morgan = require('morgan');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
 
 const AppError = require('./api/utils/appError');
 const rateLimit = require('./api/utils/rateLimit');
@@ -13,9 +13,19 @@ const globalErrorHandler = require('./api/controllers/errorController');
 const plotRouter = require('./api/routes/v1/plotRoutes');
 const userRouter = require('./api/routes/v1/userRoutes');
 const reviewRouter = require('./api/routes/v1/reviewRoutes');
+const viewRouter = require('./api/routes/v1/viewRoutes');
 
+const app = express();
+app.set('view engine', 'pug');
+app.set('views', `${__dirname}/api/views`);
+// Serving static files
+app.use(express.static(`${__dirname}/public`));
 //Data Sanitization
-app.use(helmet()); // Set Security HTTP headers
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 //Development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -24,6 +34,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api', rateLimit);
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
+app.use(cookieParser());
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
 // Data sanitization against XSS
@@ -40,10 +51,9 @@ app.use(
     ],
   })
 );
-// Serving static files
-app.use(express.static(`${__dirname}/public`));
 
 //Routes
+app.use('/', viewRouter);
 app.use('/api/v1/plots', (req, res, next) => {
   //req.opgid = req.params.opgid; //passing a parameter to a mounted route
   plotRouter(req, res, next);
