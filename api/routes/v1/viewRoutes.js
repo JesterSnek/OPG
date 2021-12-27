@@ -4,6 +4,11 @@ const authController = require('../../controllers/authController');
 
 const router = express.Router();
 
+// Protected routes
+
+router.get('/me', authController.protect, viewsController.getAccount);
+
+// Unprotected routes
 router.use(authController.isLoggedIn);
 
 router.get('/', viewsController.getOverview);

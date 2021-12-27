@@ -459,18 +459,24 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"lT62u":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+var _helpers = require("@swc/helpers");
+var _regeneratorRuntime = require("regenerator-runtime");
+var _regeneratorRuntimeDefault = parcelHelpers.interopDefault(_regeneratorRuntime);
 /* eslint-disable */ var _runtime = require("regenerator-runtime/runtime");
 var _polyfill = require("@babel/polyfill");
 var _mapbox = require("./mapbox");
 var _login = require("./login");
 var _signup = require("./signup");
 var _logout = require("./logout");
+var _updateAccount = require("./updateAccount");
 // DOM ELEMENTS
-//const plotName = JSON.parse(document.getElementById('name').dataset.name);
 var mapBox = document.getElementById('map');
 var loginForm = document.querySelector('.login-form');
 var signupForm = document.querySelector('.signup-form');
 var logOutBtn = document.querySelector('.nav__el--logout');
+var userDataForm = document.querySelector('.form-user-data');
+var userPasswordForm = document.querySelector('.form-user-password');
 // DELEGATIONS
 if (mapBox) {
     var locations = JSON.parse(mapBox.dataset.locations);
@@ -489,11 +495,47 @@ if (signupForm) signupForm.addEventListener('submit', function(e) {
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
     var passwordConfirm = document.getElementById('passwordConfirm').value;
-    console.log(name, email, password, passwordConfirm);
     _signup.signup(name, email, password, passwordConfirm);
 });
+if (userDataForm) userDataForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    _updateAccount.updateAccount({
+        name: name,
+        email: email
+    }, 'data');
+});
+if (userPasswordForm) userPasswordForm.addEventListener('submit', _helpers.asyncToGenerator(_regeneratorRuntimeDefault.default.mark(function _callee(e) {
+    var passwordCurrent, password, passwordConfirm;
+    return _regeneratorRuntimeDefault.default.wrap(function _callee$(_ctx) {
+        while(1)switch(_ctx.prev = _ctx.next){
+            case 0:
+                e.preventDefault();
+                document.querySelector('.btn--save-password').textContent = 'Updating...';
+                passwordCurrent = document.getElementById('password-current').value;
+                password = document.getElementById('password').value;
+                passwordConfirm = document.getElementById('password-confirm').value;
+                _ctx.next = 7;
+                return _updateAccount.updateAccount({
+                    passwordCurrent: passwordCurrent,
+                    password: password,
+                    passwordConfirm: passwordConfirm
+                }, 'password');
+            case 7:
+                document.querySelector('.btn--save-password').textContent = 'Save password';
+                // Clear the fields
+                document.getElementById('password-current').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('password-confirm').value = '';
+            case 11:
+            case "end":
+                return _ctx.stop();
+        }
+    }, _callee);
+})));
 
-},{"regenerator-runtime/runtime":"12Ae8","@babel/polyfill":"24gzU","./mapbox":"e59dZ","./login":"1AM71","./logout":"j4IOD","./signup":"5XINF"}],"12Ae8":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"12Ae8","@babel/polyfill":"24gzU","./mapbox":"e59dZ","./login":"1AM71","./signup":"5XINF","./logout":"j4IOD","./updateAccount":"3569I","@swc/helpers":"lQgvW","regenerator-runtime":"12Ae8","@parcel/transformer-js/src/esmodule-helpers.js":"5oERU"}],"12Ae8":[function(require,module,exports) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -10871,7 +10913,62 @@ var showAlert = function(type, message) {
     window.setTimeout(hideAlert, 5000);
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"5oERU"}],"j4IOD":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"5oERU"}],"5XINF":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "signup", function() {
+    return signup;
+});
+var _helpers = require("@swc/helpers");
+var _regeneratorRuntime = require("regenerator-runtime");
+var _regeneratorRuntimeDefault = parcelHelpers.interopDefault(_regeneratorRuntime);
+/* eslint-disable */ var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _alerts = require("./alerts");
+var signup = _helpers.asyncToGenerator(_regeneratorRuntimeDefault.default.mark(function _callee(name, email, password, passwordConfirm) {
+    var res;
+    return _regeneratorRuntimeDefault.default.wrap(function _callee$(_ctx) {
+        while(1)switch(_ctx.prev = _ctx.next){
+            case 0:
+                _ctx.prev = 0;
+                _ctx.next = 3;
+                return _axiosDefault.default({
+                    method: 'POST',
+                    url: 'http://127.0.0.1:8000/api/v1/users/signup',
+                    data: {
+                        name: name,
+                        email: email,
+                        password: password,
+                        passwordConfirm: passwordConfirm
+                    }
+                });
+            case 3:
+                res = _ctx.sent;
+                if (res.data.status === 'success') {
+                    _alerts.showAlert('success', 'Signed up successfully! Redirecting you to the homepage in 5 seconds.');
+                    window.setTimeout(function() {
+                        location.assign('/');
+                    }, 5000);
+                }
+                _ctx.next = 10;
+                break;
+            case 7:
+                _ctx.prev = 7;
+                _ctx.t0 = _ctx["catch"](0);
+                _alerts.showAlert('error', _ctx.t0.response.data.message);
+            case 10:
+            case "end":
+                return _ctx.stop();
+        }
+    }, _callee, null, [
+        [
+            0,
+            7
+        ]
+    ]);
+}));
+
+},{"@swc/helpers":"lQgvW","regenerator-runtime":"12Ae8","axios":"9qbW2","./alerts":"jIq27","@parcel/transformer-js/src/esmodule-helpers.js":"5oERU"}],"j4IOD":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "logout", function() {
@@ -10915,11 +11012,11 @@ var logout = _helpers.asyncToGenerator(_regeneratorRuntimeDefault.default.mark(f
     ]);
 }));
 
-},{"@swc/helpers":"lQgvW","regenerator-runtime":"12Ae8","axios":"9qbW2","@parcel/transformer-js/src/esmodule-helpers.js":"5oERU"}],"5XINF":[function(require,module,exports) {
+},{"@swc/helpers":"lQgvW","regenerator-runtime":"12Ae8","axios":"9qbW2","@parcel/transformer-js/src/esmodule-helpers.js":"5oERU"}],"3569I":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "signup", function() {
-    return signup;
+parcelHelpers.export(exports, "updateAccount", function() {
+    return updateAccount;
 });
 var _helpers = require("@swc/helpers");
 var _regeneratorRuntime = require("regenerator-runtime");
@@ -10927,32 +11024,22 @@ var _regeneratorRuntimeDefault = parcelHelpers.interopDefault(_regeneratorRuntim
 /* eslint-disable */ var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _alerts = require("./alerts");
-var signup = _helpers.asyncToGenerator(_regeneratorRuntimeDefault.default.mark(function _callee(name, email, password, passwordConfirm) {
-    var res;
+var updateAccount = _helpers.asyncToGenerator(_regeneratorRuntimeDefault.default.mark(function _callee(data, type) {
+    var url, res;
     return _regeneratorRuntimeDefault.default.wrap(function _callee$(_ctx) {
         while(1)switch(_ctx.prev = _ctx.next){
             case 0:
                 _ctx.prev = 0;
-                _ctx.next = 3;
+                url = type === 'password' ? 'http://127.0.0.1:8000/api/v1/users/updateMyPassword' : 'http://127.0.0.1:8000/api/v1/users/updateMe';
+                _ctx.next = 4;
                 return _axiosDefault.default({
-                    method: 'POST',
-                    url: 'http://127.0.0.1:8000/api/v1/users/signup',
-                    data: {
-                        name: name,
-                        email: email,
-                        password: password,
-                        passwordConfirm: passwordConfirm
-                    }
+                    method: 'PATCH',
+                    url: url,
+                    data: data
                 });
-            case 3:
+            case 4:
                 res = _ctx.sent;
-                console.log('Testis');
-                if (res.data.status === 'success') {
-                    _alerts.showAlert('success', 'Signed up successfully! Redirecting you to the homepage in 5 seconds.');
-                    window.setTimeout(function() {
-                        location.assign('/');
-                    }, 5000);
-                }
+                if (res.data.status === 'success') _alerts.showAlert('success', 'Changed user data successfully!');
                 _ctx.next = 11;
                 break;
             case 8:

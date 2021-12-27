@@ -14,7 +14,7 @@ export const signup = async (name, email, password, passwordConfirm) => {
         passwordConfirm,
       },
     });
-    console.log('Testis');
+
     if (res.data.status === 'success') {
       showAlert(
         'success',
