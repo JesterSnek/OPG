@@ -17,7 +17,7 @@ const viewRouter = require('./api/routes/v1/viewRoutes');
 
 const app = express();
 app.set('view engine', 'pug');
-app.set('views', `${__dirname}/api/views`);
+app.set('views', `${__dirname}/views`);
 // Serving static files
 app.use(express.static(`${__dirname}/public`));
 //Data Sanitization
