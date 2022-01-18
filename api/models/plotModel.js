@@ -29,6 +29,10 @@ const plotSchema = new mongoose.Schema(
     imageCover: {
       type: String,
     },
+    images: {
+      type: [String],
+      max: [50],
+    },
     ratingsAverage: {
       type: Number,
       default: 4.5,
