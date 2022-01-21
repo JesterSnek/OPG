@@ -60,6 +60,14 @@ const plotSchema = new mongoose.Schema(
       address: String,
       description: String,
     },
+    product: {
+      type: {
+        type: String,
+        default: 'Tangerine',
+        enum: ['Tangerine', 'Lemon'],
+      },
+      price: Number,
+    },
   },
   {
     toJSON: { virtuals: true },
