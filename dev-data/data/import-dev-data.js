@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: './.env' });
 const Plot = require('../../api/middleware/plotModelMiddleware');
-const User = require('../../api/middleware/userModelMiddleware');
 const DB = require('../../api/utils/DBString');
 
 mongoose
@@ -22,13 +21,11 @@ mongoose
 const plots = JSON.parse(
   fs.readFileSync(`${__dirname}/plots-simple.json`, 'utf-8')
 );
-const users = JSON.parse(fs.readFileSync(`${__dirname}/users.json`, 'utf-8'));
 
 //IMPORT INTO DB
 const importData = async () => {
   try {
     await Plot.create(plots);
-    await User.create(users, { validateBeforeSave: false });
     console.log('Data Loaded!');
   } catch (err) {
     console.log(err);
@@ -40,7 +37,6 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Plot.deleteMany();
-    await User.deleteMany();
     console.log('Data deleted!');
   } catch (err) {
     console.log(err);

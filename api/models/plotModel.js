@@ -29,6 +29,10 @@ const plotSchema = new mongoose.Schema(
     imageCover: {
       type: String,
     },
+    images: {
+      type: [String],
+      max: [50],
+    },
     ratingsAverage: {
       type: Number,
       default: 4.5,
@@ -55,6 +59,14 @@ const plotSchema = new mongoose.Schema(
       coordinates: [Number],
       address: String,
       description: String,
+    },
+    product: {
+      type: {
+        type: String,
+        default: 'Tangerine',
+        enum: ['Tangerine', 'Lemon'],
+      },
+      price: Number,
     },
   },
   {

@@ -3,7 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 exports.getOverview = catchAsync(async (req, res, next) => {
-  // 1) Get tour data from collection
+  // 1) Get plot data from collection
   const plots = await Plot.find();
   // 2) Build template
 

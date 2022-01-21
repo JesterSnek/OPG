@@ -12,7 +12,7 @@ router
   .get(reviewController.getAllReviews)
   .post(
     authController.restrictTo('user', 'mod'),
-    reviewController.setUserTourIds,
+    reviewController.setUserPlotIds,
     reviewController.createReview
   );
 

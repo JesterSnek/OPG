@@ -24,6 +24,9 @@ router
   .patch(
     authController.protect,
     authController.restrictTo('admin', 'lead-mod', 'mod'),
+    plotController.uploadPlotImages,
+    plotController.resizePlotImageCover,
+    plotController.resizePlotImages,
     plotController.updatePlot
   )
   .delete(

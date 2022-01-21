@@ -84,4 +84,8 @@ block content
             .cta__content
                 h2.heading-secondary What are you waiting for?
                 p.cta__text Vitamin C. Infinite memories. Make it yours today!
-                button.btn.btn--green.span-all-rows Buy now!
+
+                if user
+                    button.btn.btn--green.span-all-rows#order-plot(data-plot-id=`${plot.id}`) Buy now!
+                else
+                    a.btn.btn--green.span-all-rows(href='/login') Log in to order

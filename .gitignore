@@ -1,7 +1,10 @@
 node_modules
-config.env
 .env
 .cache
 .parcel-cache
 bundle.js
 bundle.js.map
+*.jpg
+*.png
+*.svg
+*.jpeg
