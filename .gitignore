@@ -4,6 +4,7 @@ node_modules
 .parcel-cache
 bundle.js
 bundle.js.map
-.jpg
-.jpeg
-.png
+*.jpg
+*.png
+*.svg
+*.jpeg

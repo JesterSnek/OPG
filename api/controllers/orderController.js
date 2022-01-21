@@ -15,11 +15,16 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     client_reference_id: req.params.plotID,
     line_items: [
       {
-        name: `${plot.product.type}`,
+        name: `${plot.product.type} (in kilograms)`,
         description: plot.description,
         amount: plot.product.price * 100, // * 100 because it is calculated in cents
         currency: 'eur',
-        quantity: 1,
+        adjustable_quantity: {
+          enabled: true,
+          minimum: 5,
+          maximum: 100,
+        },
+        quantity: 5,
       },
     ],
   });

@@ -6,6 +6,7 @@ import { login } from './login';
 import { signup } from './signup';
 import { logout } from './logout';
 import { updateAccount } from './updateAccount';
+import { orderProduct } from './stripe';
 
 // DOM ELEMENTS
 const mapBox = document.getElementById('map');
@@ -14,6 +15,7 @@ const signupForm = document.querySelector('.signup-form');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
+const orderBtn = document.getElementById('order-plot');
 
 // DELEGATIONS
 if (mapBox) {
@@ -78,3 +80,10 @@ if (userPasswordForm) {
     document.getElementById('password-confirm').value = '';
   });
 }
+
+if (orderBtn)
+  orderBtn.addEventListener('click', (e) => {
+    e.target.textContent = 'Processing...';
+    const { plotId } = e.target.dataset;
+    orderProduct(plotId);
+  });
