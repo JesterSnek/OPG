@@ -60,11 +60,11 @@ block content
 
     section.section-pictures
         .picture-box
-            img.picture-box__img.picture-box__img--1(src='/img/plots/tour-5-1.jpg', alt='The Park Camper Tour 1')
+            img.picture-box__img.picture-box__img--1(src=`/img/plots/${plot.images[0]}`, alt=`${plot.name} 1`)
         .picture-box
-            img.picture-box__img.picture-box__img--2(src='/img/plots/tour-5-2.jpg', alt='The Park Camper Tour 1')
+            img.picture-box__img.picture-box__img--2(src=`/img/plots/${plot.images[1]}`, alt=`${plot.name} 2`)
         .picture-box
-            img.picture-box__img.picture-box__img--3(src='/img/plots/tour-5-3.jpg', alt='The Park Camper Tour 1')
+            img.picture-box__img.picture-box__img--3(src=`/img/plots/${plot.images[2]}`, alt=`${plot.name} 3`)
 
     section.section-map
         #map(data-locations=`${JSON.stringify(plot.location)}`)
@@ -77,10 +77,8 @@ block content
 
     section.section-cta
         .cta
-            .cta__img.cta__img--logo
-                img(src='/img/logo-white.png', alt='Natours logo')
-            img.cta__img.cta__img--1(src='/img/plots/tour-5-2.jpg', alt='')
-            img.cta__img.cta__img--2(src='/img/plots/tour-5-3.jpg', alt='')
+            img.cta__img.cta__img--1(src=`/img/plots/${plot.images[1]}`, alt='')
+            img.cta__img.cta__img--2(src=`/img/plots/${plot.images[2]}`, alt='')
             .cta__content
                 h2.heading-secondary What are you waiting for?
                 p.cta__text Vitamin C. Infinite memories. Make it yours today!

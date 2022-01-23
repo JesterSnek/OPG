@@ -8,9 +8,7 @@ import { showAlert } from './alerts';
 export const orderProduct = async (plotId) => {
   try {
     // get session from API
-    const session = await axios(
-      `http://127.0.0.1:8000/api/v1/orders/checkout-session/${plotId}`
-    );
+    const session = await axios(`/api/v1/orders/checkout-session/${plotId}`);
 
     // create checkout form and charge the CC
     await stripe.redirectToCheckout({

@@ -6,6 +6,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const AppError = require('./api/utils/appError');
 const rateLimit = require('./api/utils/rateLimit');
@@ -52,6 +53,8 @@ app.use(
     ],
   })
 );
+
+app.use(compression());
 
 //Routes
 app.use('/', viewRouter);

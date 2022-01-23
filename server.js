@@ -17,8 +17,7 @@ mongoose
     console.log('DB connected.');
   });
 
-console.log(constants.ENV);
-const port = constants.PORT || 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`App running on port ${port}...`);
 });
