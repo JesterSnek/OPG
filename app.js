@@ -18,6 +18,9 @@ const orderRouter = require('./api/routes/v1/orderRoutes');
 const viewRouter = require('./api/routes/v1/viewRoutes');
 
 const app = express();
+
+app.enable('trust proxy');
+
 app.set('view engine', 'pug');
 app.set('views', `${__dirname}/views`);
 // Serving static files
