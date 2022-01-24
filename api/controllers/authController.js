@@ -20,7 +20,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   const url = `${req.protocol}://${req.get('host')}/me`;
   await new Email(newUser, url).sendWelcome();
 
-  createSendToken(newUser, 201, res);
+  createSendToken(newUser, 201, req, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -37,7 +37,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect login data.', 401));
   }
   // if all is ok, send token to client
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 exports.logout = (req, res, next) => {
@@ -193,7 +193,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // update the changedPasswordAt property for current user // Done in middleware
 
   // log user in, send JWT
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -209,5 +209,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   await user.save();
   // Log user in, send JWT
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });

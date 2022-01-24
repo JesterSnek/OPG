@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
 const app = require('./app');
 const DB = require('./api/utils/DBString');
-const constants = require('./constants/constantsCommon');
 
 mongoose
   .connect(DB, {
@@ -18,6 +17,13 @@ mongoose
   });
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`App running on port ${port}...`);
+});
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received. Shutting down!');
+  server.close(() => {
+    console.log('Process terminated!');
+  });
 });
