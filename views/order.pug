@@ -10,25 +10,25 @@ block content
                             .card__picture-overlay &nbsp;
                             img.card__picture-img(src=`/img/plots/${order.plot.imageCover}`, alt=`${order.plot.name}`)
                         h3.heading-tertirary
-                            span= order.plot.name
+                            span= `ORDER FROM: ${order.plot.name}`
 
                     .card__details
                         .card__data
                             svg.card__icon
-                                use(xlink:href='/img/icons.svg#icon-map-pin')
+                                use(xlink:href='/img/icons.svg#icon-flag')
                             span= `${order.price} Euro per kg` 
                         .card__data
                             svg.card__icon
                                 use(xlink:href='/img/icons.svg#icon-calendar')
-                            span= `${order.createdAt.toLocaleDateString()}` 
+                            span= `${order.createdAt.split('T')[0]}` 
                         .card__data
                             svg.card__icon
                                 use(xlink:href='/img/icons.svg#icon-flag')
                             span= `Total of ${order.price * order.quantity} Euro`
                         .card__data
                             svg.card__icon
-                                use(xlink:href='/img/icons.svg#icon-calendar')
-                            span= `${order.createdAt.getHours() - 1}hrs${order.createdAt.getMinutes()}min`
+                                use(xlink:href='/img/icons.svg#icon-clock')
+                            span= `${order.createdAt.split('T')[1].split('+')[0]} GMT+1`
                     .card__footer
                         p.card__ratings
                         a.btn.btn--green.btn--small(href=`/plot/${order.plot.slug}`) Plot Details 
