@@ -1,18 +1,18 @@
 [
   {
-    "name": "Bara",
-    "size": 397,
+    "name": "Bare",
+    "size": 2000,
     "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "imageCover": "-1-cover.jpg",
-    "images": ["-1-1.jpg", "-1-2.jpg", "-1-3.jpg"],
+    "imageCover": "plot-1-cover.jpg",
+    "images": ["plot-1-1.jpg", "plot-1-2.jpg", "plot-1-3.jpg"],
     "soilType": "Peat",
-    "trees": 160,
+    "trees": 300,
     "ratingsQuantity": "9",
     "ratingsAverage": 4.7,
     "location": {
       "description": "Slivno, Croatia",
       "type": "Point",
-      "coordinates": [43.001078, 17.547255]
+      "coordinates": [17.547255, 43.001078]
     },
     "product": {
       "type": "Tangerine",
@@ -20,67 +20,83 @@
     }
   },
   {
-    "name": "Škanj",
-    "size": 478,
+    "name": "Luke",
+    "size": 1700,
     "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "imageCover": "-2-cover.jpg",
-    "images": ["-2-1.jpg", "-2-2.jpg", "-2-3.jpg"],
+    "imageCover": "plot-2-cover.jpg",
+    "images": ["plot-2-1.jpg", "plot-2-2.jpg", "plot-2-3.jpg"],
     "soilType": "Clay",
-    "trees": 130,
+    "trees": 200,
     "ratingsQuantity": "5",
     "ratingsAverage": 4.8,
     "location": {
       "description": "Slivno, Croatia",
       "type": "Point",
-      "coordinates": [42.99925, 17.549114]
+      "coordinates": [17.549114, 42.99925]
+    },
+    "product": {
+      "type": "Lemon",
+      "price": 2
     }
   },
   {
-    "name": "Pik",
-    "size": 1455,
+    "name": "Glog",
+    "size": 15000,
     "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "imageCover": "-2-cover.jpg",
-    "images": ["-2-1.jpg", "-2-2.jpg", "-2-3.jpg"],
+    "imageCover": "plot-3-cover.jpg",
+    "images": ["plot-3-1.jpg", "plot-3-2.jpg", "plot-3-3.jpg"],
     "soilType": "Silt",
-    "trees": 800,
+    "trees": 2000,
     "ratingsQuantity": "24",
     "ratingsAverage": 4.9,
     "location": {
       "description": "Slivno, Croatia",
       "type": "Point",
-      "coordinates": [43.0107373565549, 17.493113386439394]
+      "coordinates": [17.493113386439394, 43.0107373565549]
+    },
+    "product": {
+      "type": "Tangerine",
+      "price": 2
     }
   },
   {
     "name": "Crepina",
-    "size": 607,
+    "size": 800,
     "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "imageCover": "-2-cover.jpg",
-    "images": ["-2-1.jpg", "-2-2.jpg", "-2-3.jpg"],
+    "imageCover": "plot-4-cover.jpg",
+    "images": ["plot-4-1.jpg", "plot-4-2.jpg", "plot-4-3.jpg"],
     "soilType": "Peat",
-    "trees": 85,
+    "trees": 80,
     "ratingsQuantity": "5",
     "ratingsAverage": 4.7,
     "location": {
       "description": "Slivno, Croatia",
       "type": "Point",
-      "coordinates": [43.01562894748992, 17.520483999894825]
+      "coordinates": [17.520483999894825, 43.01562894748992]
+    },
+    "product": {
+      "type": "Tangerine",
+      "price": 2
     }
   },
   {
-    "name": "Podškanj",
-    "size": 998,
+    "name": "Pali Greb",
+    "size": 3000,
     "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "imageCover": "-2-cover.jpg",
-    "images": ["-2-1.jpg", "-2-2.jpg", "-2-3.jpg"],
+    "imageCover": "plot-5-cover.jpg",
+    "images": ["plot-5-1.jpg", "plot-5-2.jpg", "plot-5-3.jpg"],
     "soilType": "Peat",
-    "trees": 204,
+    "trees": 500,
     "ratingsQuantity": "17",
     "ratingsAverage": 4.8,
     "location": {
       "description": "Slivno, Croatia",
       "type": "Point",
-      "coordinates": [42.99925, 17.549114]
+      "coordinates": [17.549114, 42.99925]
+    },
+    "product": {
+      "type": "Tangerine",
+      "price": 2
     }
   }
 ]
