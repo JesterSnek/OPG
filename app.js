@@ -7,6 +7,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const AppError = require('./api/utils/appError');
 const rateLimit = require('./api/utils/rateLimit');
@@ -23,6 +24,10 @@ app.enable('trust proxy');
 
 app.set('view engine', 'pug');
 app.set('views', `${__dirname}/views`);
+
+// CORS Implementation
+app.use(cors()); // Enough for simple requests
+app.options('*', cors()); // Responding to the options request in order to enable CORS for non simple requests
 // Serving static files
 app.use(express.static(`${__dirname}/public`));
 //Data Sanitization
