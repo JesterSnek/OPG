@@ -1,7 +1,6 @@
 const express = require('express');
 const viewsController = require('../../controllers/viewsController');
 const authController = require('../../controllers/authController');
-const orderController = require('../../controllers/orderController');
 
 const router = express.Router();
 
@@ -15,7 +14,7 @@ router.use(authController.isLoggedIn);
 
 router.get(
   '/',
-  orderController.createOrderCheckout,
+  // orderController.createOrderCheckout,
   authController.isLoggedIn,
   viewsController.getOverview
 );
