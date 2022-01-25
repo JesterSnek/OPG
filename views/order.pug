@@ -16,7 +16,7 @@ block content
                         .card__data
                             svg.card__icon
                                 use(xlink:href='/img/icons.svg#icon-flag')
-                            span= `${order.price} Euro per kg` 
+                            span= `${order.price / order.plot.product.price} kg bought` 
                         .card__data
                             svg.card__icon
                                 use(xlink:href='/img/icons.svg#icon-calendar')
@@ -24,7 +24,7 @@ block content
                         .card__data
                             svg.card__icon
                                 use(xlink:href='/img/icons.svg#icon-flag')
-                            span= `Total of ${order.price * order.quantity} Euro`
+                            span= `Total of ${order.price} Euro`
                         .card__data
                             svg.card__icon
                                 use(xlink:href='/img/icons.svg#icon-clock')

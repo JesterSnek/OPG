@@ -4,7 +4,7 @@ const orderSchema = require('../models/orderModel');
 orderSchema.pre(/^find/, function (next) {
   this.populate('user').populate({
     path: 'plot',
-    select: 'name imageCover slug',
+    select: 'name imageCover slug product',
   });
   next();
 });
