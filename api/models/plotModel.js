@@ -68,6 +68,7 @@ const plotSchema = new mongoose.Schema(
       },
       price: Number,
     },
+    expectedQuant: Number,
   },
   {
     toJSON: { virtuals: true },

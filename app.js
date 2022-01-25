@@ -7,6 +7,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const AppError = require('./api/utils/appError');
 const rateLimit = require('./api/utils/rateLimit');
@@ -15,6 +16,7 @@ const plotRouter = require('./api/routes/v1/plotRoutes');
 const userRouter = require('./api/routes/v1/userRoutes');
 const reviewRouter = require('./api/routes/v1/reviewRoutes');
 const orderRouter = require('./api/routes/v1/orderRoutes');
+const orderController = require('./api/controllers/orderController');
 const viewRouter = require('./api/routes/v1/viewRoutes');
 
 const app = express();
@@ -23,6 +25,10 @@ app.enable('trust proxy');
 
 app.set('view engine', 'pug');
 app.set('views', `${__dirname}/views`);
+
+// CORS Implementation
+app.use(cors()); // Enough for simple requests
+app.options('*', cors()); // Responding to the options request in order to enable CORS for non simple requests
 // Serving static files
 app.use(express.static(`${__dirname}/public`));
 //Data Sanitization
@@ -37,6 +43,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 // Limit request from same IP
 app.use('/api', rateLimit);
+// Putting this route before the Body parser below because the body needs to be in raw form for the stripe webhook to work, not in JSON
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  orderController.webhookCheckout
+);
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
