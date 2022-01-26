@@ -28,7 +28,7 @@ block content
                         .card__data
                             svg.card__icon
                                 use(xlink:href='/img/icons.svg#icon-clock')
-                            span= `${order.createdAt.split('T')[1].split('+')[0]} GMT+1`
+                            span= `${order.createdAt.split('T')[1].split('+')[0]} GMT`
                     .card__footer
                         p.card__ratings
                         a.btn.btn--green.btn--small(href=`/plot/${order.plot.slug}`) Plot Details 
