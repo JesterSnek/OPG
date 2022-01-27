@@ -4,9 +4,14 @@ import { showAlert } from './alerts';
 
 export const login = async (email, password) => {
   try {
+    const url =
+      process.env.NODE_ENV === 'development'
+        ? 'http://127.0.0.1:8000/api/v1/users/login'
+        : '/api/v1/users/login';
+
     const res = await axios({
       method: 'POST',
-      url: '/api/v1/users/login',
+      url,
       data: {
         email,
         password,
