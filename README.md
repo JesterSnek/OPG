@@ -68,6 +68,8 @@
 * [Express](https://expressjs.com/)
 * [Mongoose](https://mongoosejs.com/)
 * [Pug](https://github.com/pugjs/pug)
+* [MongoDB](https://www.mongodb.com/)
+* Database hosted on https://www.mongodb.com/atlas/database
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
