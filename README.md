@@ -121,6 +121,10 @@ To get a local copy up and running follow these steps.
 
    STRIPE_SECRET_KEY=xxxx  //Self-explanatory
    ```
+4. Build the Parcel files
+   ```sh
+   npm run build:js
+   ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
